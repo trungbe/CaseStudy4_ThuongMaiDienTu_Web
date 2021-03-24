@@ -10,15 +10,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService implements IAdminService {
+    @Autowired
+    private IAdminRepo adminRepo;
 
     @Override
     public Page<LoginUser> findAll(Pageable pageable) {
-        return null;
+        return adminRepo.findAllByOrderByIdAsc(pageable);
     }
 
     @Override
     public Page<LoginUser> findUserRoleName(UserRole userRole, Pageable pageable) {
-        return null;
+        return adminRepo.findAllByUserRole(userRole, pageable);
     }
-
 }
