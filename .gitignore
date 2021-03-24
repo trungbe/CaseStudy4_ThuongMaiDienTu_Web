@@ -35,5 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 *.env/
 dat.env/
+=======
+*.env
+trung.env
+>>>>>>> d03fd9b4955340029166214d7f723076c07a0da8
