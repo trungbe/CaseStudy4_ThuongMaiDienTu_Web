@@ -15,18 +15,18 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private ILoginUserService loginUserService;
+//    @Autowired
+//    private ILoginUserService loginUserService;
 
     @Autowired
     private LoginSuccessHandler productSuccessHandle;
 
 
     //lay du lieu user tu trong DB
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService((UserDetailsService) loginUserService).passwordEncoder(NoOpPasswordEncoder.getInstance());
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService((UserDetailsService) loginUserService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+//    }
 
     //phan quyen theo tung tai khoan
     @Override
