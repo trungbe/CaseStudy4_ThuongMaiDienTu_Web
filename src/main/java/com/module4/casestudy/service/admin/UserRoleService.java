@@ -2,6 +2,7 @@ package com.module4.casestudy.service.admin;
 
 import com.module4.casestudy.exception.NotFoundException;
 import com.module4.casestudy.model.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
