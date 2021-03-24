@@ -36,8 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 <<<<<<< HEAD
-*.env/
-dat.env/
+*.env
+dat.env
 =======
 *.env
 trung.env
