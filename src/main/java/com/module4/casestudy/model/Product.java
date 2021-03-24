@@ -4,11 +4,9 @@ package com.module4.casestudy.model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 public class Product {
@@ -17,16 +15,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 2, max = 30, message = "Please fill out from 2 to 30 characters ! ")
+    @NotEmpty
     private String name;
 
-    @Min(value = 10, message = "Please fill out minimum 10k")
-    private Double price;
-    @NotEmpty(message = "Please fill out description")
-    private String description;
     @NotNull
+    private Double price;
+
+    private String description;
+
     private Date date_time;
-    @Min(value = 1, message = "Please fill out minimum 1 quantity")
+    @NotNull
     private Long quantity;
 
     private String image;
@@ -39,25 +37,11 @@ public class Product {
     @ManyToOne
     private Shop shop;
 
-    public Product(Long id, @Size(min = 2, max = 30, message = "Please fill out from 2 to 30 characters ! ") String name, @Min(value = 10, message = "Please fill out minimum 10k") Double price, @NotEmpty(message = "Please fill out description") String description, @NotNull Date date_time, @Min(value = 1, message = "Please fill out minimum 1 quantity") Long quantity, String image, MultipartFile imageMul, Long soldNumber, Double rate, Category category, Shop shop) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.date_time = date_time;
-        this.quantity = quantity;
-        this.image = image;
-        this.imageMul = imageMul;
-        this.soldNumber = soldNumber;
-        this.rate = rate;
-        this.category = category;
-        this.shop = shop;
-    }
-
     public Product() {
     }
 
-    public Product(@Size(min = 2, max = 30, message = "Please fill out from 2 to 30 characters ! ") String name, @Min(value = 10, message = "Please fill out minimum 10k") Double price, @NotEmpty(message = "Please fill out description") String description, @NotNull Date date_time, @Min(value = 1, message = "Please fill out minimum 1 quantity") Long quantity, String image, MultipartFile imageMul, Long soldNumber, Double rate, Category category, Shop shop) {
+    public Product(Long id, @NotEmpty String name, @NotNull Double price, String description, Date date_time, @NotNull Long quantity, String image, MultipartFile imageMul, Long soldNumber, Double rate, Category category, Shop shop) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;

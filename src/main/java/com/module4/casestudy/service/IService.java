@@ -12,7 +12,7 @@ public interface IService<T>{
 
     Page<T> findALl(Pageable pageable);
 
-    T findById(Long id) throws NotFoundException;
+    T findById(Long id);
 
     T save(T t);
 
