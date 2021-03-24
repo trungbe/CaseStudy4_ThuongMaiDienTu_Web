@@ -12,5 +12,4 @@ public interface BillRepository extends JpaRepository<Bill,Long> {
     @Query(value = "select * from bill where login_user_id = ? and status = false;", nativeQuery = true)
     public List<Bill> findBillNotPayByUserId(Long userId);
 
-
 }
