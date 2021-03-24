@@ -73,5 +73,19 @@ public class ProductController {
         modelAndView.addObject("mess", "Tao moi thanh cong product ten la " + product.getName());
         return modelAndView;
     }
+    @GetMapping("/edit/{id}")
+    public ModelAndView showEdit(@PathVariable Long id) throws NotFoundException {
+        Product products = productService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("shop/product/edit");
+        modelAndView.addObject("product", products);
+        return modelAndView;
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView edit(@PathVariable Long id, @ModelAttribute Product product) {
+        product.setId(id);
+        productService.save(product);
+        return new ModelAndView("redirect:/products");
+    }
 
 }
