@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -39,6 +41,12 @@ public class LoginUserController {
     public ModelAndView showFormCreate(){
         ModelAndView modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("user", new LoginUser());
+        return modelAndView;
+    }
+    @PostMapping("/create")
+    public ModelAndView createUser(@ModelAttribute LoginUser loginUser){
+        loginUserService.save(loginUser);
+        ModelAndView modelAndView = new ModelAndView("user/create", "user", new LoginUser());
         return modelAndView;
     }
 }
