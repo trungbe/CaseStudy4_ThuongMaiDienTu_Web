@@ -2,23 +2,17 @@ package com.module4.casestudy.service.admin;
 
 import com.module4.casestudy.exception.NotFoundException;
 import com.module4.casestudy.model.UserRole;
-import com.module4.casestudy.repository.admin.IUserRoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
-public class UserRoleService implements IUserRoleService {
-
-    @Autowired
-    private IUserRoleRepo userRoleRepo;
-
+public class UserRoleService implements IUserRoleService{
     @Override
     public List<UserRole> findALl() {
-        return (List<UserRole>) userRoleRepo.findAll();
+        return null;
     }
 
     @Override
