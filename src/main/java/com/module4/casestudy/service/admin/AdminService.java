@@ -22,5 +22,4 @@ public class AdminService implements IAdminService {
     public Page<LoginUser> findUserRoleName(UserRole userRole, Pageable pageable) {
         return adminRepo.findAllByUserRole(userRole, pageable);
     }
-
 }
