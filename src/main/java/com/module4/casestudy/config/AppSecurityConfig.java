@@ -17,7 +17,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
 
-
     //lay du lieu user tu trong DB
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

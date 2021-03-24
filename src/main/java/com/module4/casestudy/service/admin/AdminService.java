@@ -15,7 +15,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public Page<LoginUser> findAll(Pageable pageable) {
-        return adminRepo.findAll(pageable);
+        return adminRepo.findAllByOrderByIdAsc(pageable);
     }
 
     @Override
