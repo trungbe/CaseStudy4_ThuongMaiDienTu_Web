@@ -1,8 +1,5 @@
 package com.module4.casestudy.config;
-
-
-//import casestudy1module4.onlinemall.service.loginUser.ILoginUserService;
-//import casestudy1module4.onlinemall.service.loginUser.ILoginUserService;
+import com.module4.casestudy.service.appuser.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,19 +11,18 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
-
-//    @Autowired
-//    private ILoginUserService loginUserService;
+    @Autowired
+    private IAppUserService appUserService;
 
     @Autowired
-    private LoginSuccessHandler productSuccessHandle;
+    private LoginSuccessHandler loginSuccessHandler;
 
 
     //lay du lieu user tu trong DB
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService((UserDetailsService) loginUserService).passwordEncoder(NoOpPasswordEncoder.getInstance());
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService((UserDetailsService) appUserService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+    }
 
     //phan quyen theo tung tai khoan
     @Override
@@ -37,7 +33,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .and()
-                .formLogin().successHandler(productSuccessHandle)
+                .formLogin().successHandler(loginSuccessHandler)
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .and()
