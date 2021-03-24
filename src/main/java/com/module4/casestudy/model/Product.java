@@ -40,7 +40,20 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, @NotEmpty String name, @NotNull Double price, String description, Date date_time, @NotNull Long quantity, String image, MultipartFile imageMul, Long soldNumber, Double rate, Category category, Shop shop) {
+    public Product(Long id, @NotEmpty String name, @NotNull Double price, String description, Date date_time, @NotNull Long quantity, String image, MultipartFile imageMul, Category category, Shop shop) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.date_time = date_time;
+        this.quantity = quantity;
+        this.image = image;
+        this.imageMul = imageMul;
+        this.category = category;
+        this.shop = shop;
+    }
+
+    public Product(Long id, @NotEmpty String name, @NotNull Double price, String description, Date date_time, @NotNull Long quantity, String image, MultipartFile imageMul, Long soldNumber, Double rate, Category category) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -52,7 +65,6 @@ public class Product {
         this.soldNumber = soldNumber;
         this.rate = rate;
         this.category = category;
-        this.shop = shop;
     }
 
     public MultipartFile getImageMul() {
