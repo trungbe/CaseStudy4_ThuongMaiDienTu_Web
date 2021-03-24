@@ -94,7 +94,6 @@ public class ProductController {
 
     @PostMapping("/edit/{id}")
     public ModelAndView edit(@ModelAttribute Product product) {
-//        product.setId(id);
         productService.save(product);
         return new ModelAndView("redirect:/products");
     }
