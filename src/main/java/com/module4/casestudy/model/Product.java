@@ -57,6 +57,20 @@ public class Product {
     public Product() {
     }
 
+    public Product(@Size(min = 2, max = 30, message = "Please fill out from 2 to 30 characters ! ") String name, @Min(value = 10, message = "Please fill out minimum 10k") Double price, @NotEmpty(message = "Please fill out description") String description, @NotNull Date date_time, @Min(value = 1, message = "Please fill out minimum 1 quantity") Long quantity, String image, MultipartFile imageMul, Long soldNumber, Double rate, Category category, Shop shop) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.date_time = date_time;
+        this.quantity = quantity;
+        this.image = image;
+        this.imageMul = imageMul;
+        this.soldNumber = soldNumber;
+        this.rate = rate;
+        this.category = category;
+        this.shop = shop;
+    }
+
     public MultipartFile getImageMul() {
         return imageMul;
     }

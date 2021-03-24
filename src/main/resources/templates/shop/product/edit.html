@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{shop/layouts/master_layout :: master_layout(
+~{::title},
+~{:: #main}
+)}"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit product</title>
 </head>
 <body>
 

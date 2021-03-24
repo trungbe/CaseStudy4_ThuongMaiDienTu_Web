@@ -1,5 +1,6 @@
 package com.module4.casestudy.controllers;
 
+import com.module4.casestudy.exception.NotFoundException;
 import com.module4.casestudy.model.Category;
 import com.module4.casestudy.model.Product;
 import com.module4.casestudy.service.category.ICategoryService;
@@ -13,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,6 +37,11 @@ public class ProductController {
         return categoryService.findALl();
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView showNotFound() {
+        return new ModelAndView("error-404");
+    }
+
     @GetMapping("")
     public ModelAndView getAll(@PageableDefault(size = 5) Pageable pageable) {
         Page<Product> products = productService.findALl(pageable);
@@ -46,6 +49,7 @@ public class ProductController {
         modelAndView.addObject("products", products);
         return modelAndView;
     }
+
     @GetMapping("/create")
     public ModelAndView showCreate() {
         ModelAndView modelAndView = new ModelAndView("shop/product/create");
@@ -53,7 +57,7 @@ public class ProductController {
         return modelAndView;
     }
 
-    @PostMapping("/create")
+        @PostMapping("/create")
     public ModelAndView create(@Validated @ModelAttribute Product product, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasFieldErrors()) {
             ModelAndView modelAndView = new ModelAndView("shop/product/create");
@@ -69,4 +73,5 @@ public class ProductController {
         modelAndView.addObject("mess", "Tao moi thanh cong product ten la " + product.getName());
         return modelAndView;
     }
+
 }
