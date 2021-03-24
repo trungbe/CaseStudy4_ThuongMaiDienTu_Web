@@ -20,8 +20,8 @@ public class AppUserService implements IAppUserService, UserDetailsService {
     private AppUserRepository appUserRepository;
 
     @Override
-    public LoginUser getUserByName(String name) {
-        return appUserRepository.getLoginUserByName(name);
+    public LoginUser getUserByUserName(String userName) {
+        return appUserRepository.getLoginUserByUsername(userName);
     }
 
     @Override
@@ -36,13 +36,13 @@ public class AppUserService implements IAppUserService, UserDetailsService {
         else {
             name = ob.toString();
         }
-        loginUser = this.getUserByName(name);
+        loginUser = this.getUserByUserName(name);
         return loginUser;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LoginUser loginUser= this.getUserByName(username);
+        LoginUser loginUser= this.getUserByUserName(username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(loginUser.getUserRole());
         UserDetails userDetails = new User(
@@ -51,5 +51,6 @@ public class AppUserService implements IAppUserService, UserDetailsService {
                 authorities
         );
         return userDetails;
+
     }
 }

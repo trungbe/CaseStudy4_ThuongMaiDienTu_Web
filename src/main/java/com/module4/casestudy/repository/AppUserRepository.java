@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 public interface AppUserRepository extends JpaRepository<LoginUser, Long> {
-    LoginUser getLoginUserByName(String name);
+    LoginUser getLoginUserByUsername(String name);
 }
