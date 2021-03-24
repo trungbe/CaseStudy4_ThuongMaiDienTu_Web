@@ -1,4 +1,4 @@
-package com.module4.casestudy.controllers;
+package com.module4.casestudy.controllers.product;
 
 import com.module4.casestudy.exception.NotFoundException;
 import com.module4.casestudy.model.Category;
@@ -55,22 +55,6 @@ public class ProductController {
         return modelAndView;
     }
 
-    //    @PostMapping("/create")
-//    public ModelAndView create(@Validated @ModelAttribute Product product, BindingResult bindingResult) throws IOException {
-//        if (bindingResult.hasFieldErrors()) {
-//            ModelAndView modelAndView = new ModelAndView("shop/product/create");
-//            return modelAndView;
-//        }
-//        MultipartFile imageMul = product.getImageMul();
-//        String image = imageMul.getOriginalFilename();
-//        String resource = environment.getProperty("upload.path").toString();
-//        FileCopyUtils.copy(imageMul.getBytes(), new File(resource + image));
-//        product.setImage(image);
-//        productService.save(product);
-//        ModelAndView modelAndView = new ModelAndView("shop/product/create", "products", new Product());
-//        modelAndView.addObject("mess", "Tao moi thanh cong product ten la " + product.getName());
-//        return modelAndView;
-//    }
     @PostMapping("/create")
     public ModelAndView create(@ModelAttribute Product product) throws IOException {
         MultipartFile imageMul = product.getImageMul();
