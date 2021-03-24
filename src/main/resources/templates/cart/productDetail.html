@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Product detail</h1>
+<a th:href="'/cart/getCart/'"> your cart</a>
+<p th:text= "'wellcome: '+${currentUser.name}" ></p>
+
+
+<table th:object="${billDetail}">
+    <tr>
+        <td>Image</td>
+        <td th:text="${billDetail.product.image}"></td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td th:text="${billDetail.product.name}"></td>
+    </tr>
+    <tr>
+        <td>Price</td>
+        <td th:text="${billDetail.product.price}"></td>
+    </tr>
+    <tr>
+        <td>Shop</td>
+        <td th:text="${billDetail.product.shop.name}"></td>
+    </tr>
+    <tr>
+    </tr>
+
+</table>
+<form  th:object="${billDetail}" th:type="POST">
+    <button type="submit">add to cad</button>
+
+</form>
+<script>
+
+    function addToCart(){
+        let billDetail  = '${billDetail}'
+    }
+</script>
+</body>
+</html>

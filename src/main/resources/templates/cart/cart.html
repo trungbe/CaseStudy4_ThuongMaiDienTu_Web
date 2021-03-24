@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:text="'wellcome: '+${currentUser.name}"></p>
+
+
+<h1>Product in cart</h1>
+
+<table>
+    <tr>
+        <td>Image</td>
+        <td>Name</td>
+        <td>Price</td>
+        <td>Number</td>
+        <td>Shop</td>
+        <td>Delete</td>
+    </tr>
+    <tr th:each="c:${productInCarts}">
+        <td th:text="${c.product.image}"></td>
+        <td th:text="${c.product.name}"></td>
+        <td th:text="${c.product.price*c.number}"></td>
+        <td th:text="${c.number}"></td>
+        <td th:text="${c.product.shop.name}"></td>
+        <td><a th:href="${c.id}" onclick="deleteBillDetail($(this))">Delete</a></td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+    function deleteBillDetail(a) {
+        let billDetail = a.attr("href");
+        $.ajax({
+            type: "DELETE",
+            url: "/cart/delete/"+billDetail,
+            success: function (){
+            a.parent().parent().remove()
+            }
+        });
+        event.preventDefault();
+
+    }
+</script>
+</body>
+</html>
