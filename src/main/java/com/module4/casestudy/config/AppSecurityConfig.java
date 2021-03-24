@@ -36,6 +36,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().successHandler(loginSuccessHandler)
                 .and()
+                .formLogin().loginPage("/login")
+                .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .and()
                 .exceptionHandling().accessDeniedPage("/khongcoquyen");
