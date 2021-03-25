@@ -25,7 +25,7 @@ public class UserRoleService implements IUserRoleService{
 
     @Override
     public UserRole findById(Long id){
-        return null;
+        return userRoleRepo.findById(id).get();
     }
 
     @Override
