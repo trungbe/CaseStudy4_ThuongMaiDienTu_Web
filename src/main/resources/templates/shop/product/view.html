@@ -6,9 +6,46 @@
 )}">
 <head>
     <meta charset="UTF-8">
-    <title>Thông tin sản phẩm</title>
+    <title>Thông tin sản phẩm </title>
 </head>
 <body>
-
+<main id="main">
+    <div class="container-fluid" style="margin-top:20px">
+        <div class="card mb-4">
+            <div class="modal-content">
+                <div class="modal-header" style="display: flex;justify-content: space-between">
+                    <h4 class="modal-title">Thông tin sản phẩm</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-4  pull-left" th:text="'ID: '+${product.id}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="'Name: '+${product.name}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="'Price: '+${product.price}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="'Category: '+${product.category.name}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left">Description :</div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="${product.description}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="'Date time: '+${product.date_time}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="'Quantity: '+${product.quantity}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="'Sold number: '+${product.soldNumber}"></div>
+                    <br>
+                    <div class="col-sm-4  pull-left">Ảnh</div>
+                    <br>
+                    <div>
+                        <img th:src="${'/uploadfile/'+product.image}" width="100px">
+                    </div>
+                    <br>
+                    <div class="col-sm-4  pull-left" th:text="'Rate: '+${product.rate}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>
