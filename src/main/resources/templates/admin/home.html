@@ -1,10 +1,17 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{shop/layouts/master_layout :: master_layout(
+                                                ~{::title},
+                                                ~{:: #main}
+                                               )}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
 </head>
 <body>
-<a th:href="@{/admin/list}">Trang danh sach</a>
+<main id="main">
+    <div style="height: 1000px;"></div>
+    <h1>Hello Admin</h1>
+</main>
 </body>
 </html>

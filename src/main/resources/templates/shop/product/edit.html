@@ -1,10 +1,93 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{shop/layouts/master_layout :: master_layout(
+~{::title},
+~{:: #main}
+)}"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit product</title>
 </head>
 <body>
+<main id="main">
+    <div class="container-fluid" style="margin-top:20px">
+        <div class="card mb-4">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật sản phẩm</h4>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${product}" method="post" enctype="multipart/form-data">
+                        <div id="form-add-employee">
+                            <label class="col-sm-4  pull-left">ID</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" th:field="*{id}" readonly/>
+                            </div>
+                            <label class="col-sm-4  pull-left">Name</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" th:field="*{name}" required/>
+                                <!--                                <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>-->
+                            </div>
+                            <label class="col-sm-4  pull-left">Price</label>
+                            <div class="col-sm-12" style="display: flex;justify-items: center;line-height: 36px;">
+                                <input type="number" class="form-control col-sm-3" th:field="*{price}">
+<!--                                <td th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Name Error</td>-->
+                            </div>
+                            <label class="col-sm-4  pull-left">Category</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" th:field="*{category.id}">
+                                    <option th:each="c : ${categories}" th:value="${c.id}"
+                                            th:text="${c.name}"></option>
+                                </select>
+                            </div>
+                            <label class="col-sm-4  pull-left">Description</label>
+                            <div class="col-sm-12">
+                            <textarea class="form-control" th:field="*{description}"
+                                      maxlength="500"></textarea>
+<!--                                <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error-->
+                                </td>
+                            </div>
+                            <label class="col-sm-4  pull-left">Date time</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" th:field="*{date_time}"/>
+                            </div>
+                            <label class="col-sm-4  pull-left">Quantity</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control" th:field="*{quantity}"/>
+<!--                                <td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Name Error</td>-->
+                            </div>
+<!--                            <label class="col-sm-4  pull-left">Sold Number</label>-->
+<!--                            <div class="col-sm-3">-->
+<!--                                <input type="number" class="form-control" th:field="*{soldNumber}" readonly/>-->
+<!--                            </div>-->
+                            <label class="col-sm-4  pull-left">Image</label>
+                            <div class="col-sm-12">
+                                <div class="input-field" >
+                                    <input type="file" th:field="*{imageMul}"/>
+                                </div>
+                            </div>
+<!--                            <label class="col-sm-4  pull-left">Rate</label>-->
+<!--                            <div class="col-sm-12">-->
+<!--                                <div class="input-field">-->
+<!--                                    <input type="text" th:field="*{rate}"readonly/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <label class="col-sm-4  pull-left">Shop Name</label>-->
+<!--                            <div class="col-sm-12">-->
+<!--                                <input type="text" class="form-control" th:field="*{shop.name}" readonly>-->
+<!--                            </div>-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+</main>
 </body>
 </html>

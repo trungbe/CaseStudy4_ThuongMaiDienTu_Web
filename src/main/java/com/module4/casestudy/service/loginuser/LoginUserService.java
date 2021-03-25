@@ -25,7 +25,7 @@ public class LoginUserService implements ILoginUserService{
     }
 
     @Override
-    public LoginUser findById(Long id) throws NotFoundException {
+    public LoginUser findById(Long id) {
         return loginUserRepository.findById(id).get();
     }
 

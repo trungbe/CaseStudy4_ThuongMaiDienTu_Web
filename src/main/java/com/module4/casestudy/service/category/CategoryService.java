@@ -2,6 +2,7 @@ package com.module4.casestudy.service.category;
 
 
 import com.module4.casestudy.model.Category;
+
 import com.module4.casestudy.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoryService implements ICategoryService{
-
+public class CategoryService implements ICategoryService {
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
+
     @Override
     public List<Category> findALl() {
         return (List<Category>) categoryRepository.findAll();
@@ -32,12 +33,13 @@ public class CategoryService implements ICategoryService{
 
     @Override
     public Category save(Category category) {
-        return null;
+        return categoryRepository.save(category);
     }
 
     @Override
     public void deleteById(Long id) {
 
     }
+
 
 }

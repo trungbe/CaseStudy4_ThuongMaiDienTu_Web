@@ -1,49 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{shop/layouts/master_layout :: master_layout(
+                                                ~{::title},
+                                                ~{:: #main}
+                                               )}">
 <head>
     <meta charset="UTF-8">
     <title>List</title>
-<!--    <head th:replace="/layout :: head"></head>-->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!--    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+<!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
+<!--    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 </head>
 <body>
-<form method="post" action="/admin/search" th:object="${userRole}">
-    <select th:field="*{id}">
-        <option th:each="a : ${userRoles}" th:value="${a.id}" th:text="${a.name}"></option>
-    </select>
-    <button class="btn btn-primary">Show</button>
-    <br>
-</form>
-<table id="customers">
-    <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Email</th>
-        <th>UserName</th>
-        <th>Password</th>
-        <th>Role</th>
-    </tr>
-    <th:block th:each="p: ${admin}">
+<main id="main">
+    <form method="post" action="/admin/search" th:object="${userRole}">
+        <select th:field="*{id}">
+            <option th:each="a : ${userRoles}" th:value="${a.id}" th:text="${a.name}"></option>
+        </select>
+        <button class="btn btn-primary">Show</button>
+        <br>
+    </form>
+    <table id="customers">
         <tr>
-            <td th:text="${p.name}"></td>
-            <td th:text="${p.address}"></td>
-            <td th:text="${p.email}"></td>
-            <td th:text="${p.username}"></td>
-            <td th:text="${p.password}"></td>
-            <td th:text="${p.userRole.name}"></td>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>UserName</th>
+            <th>Password</th>
+            <th>Role</th>
         </tr>
-    </th:block>
-</table>
-<div>
-    <a th:href="@{'/admin/list'(page=${admin.number - 1})}" role="button" class="btn btn-primary"
-       th:if="${admin.hasPrevious()}">Previous</a>
-    <span th:text="${admin.number + 1}"></span>
-    /<span th:text="${admin.totalPages}"></span>
-    <a th:href="@{'/admin/list'(page=${admin.number + 1})}" role="button" class="btn btn-primary"
-       th:if="${admin.hasNext()}">Next</a>
-</div>
+        <th:block th:each="p: ${admin}">
+            <tr>
+                <td th:text="${p.name}"></td>
+                <td th:text="${p.address}"></td>
+                <td th:text="${p.email}"></td>
+                <td th:text="${p.username}"></td>
+                <td th:text="${p.password}"></td>
+                <td th:text="${p.userRole.name}"></td>
+            </tr>
+        </th:block>
+    </table>
+    <div>
+        <a th:href="@{'/admin/list'(page=${admin.number - 1})}" role="button" class="btn btn-primary"
+           th:if="${admin.hasPrevious()}">Previous</a>
+        <span th:text="${admin.number + 1}"></span>
+        /<span th:text="${admin.totalPages}"></span>
+        <a th:href="@{'/admin/list'(page=${admin.number + 1})}" role="button" class="btn btn-primary"
+           th:if="${admin.hasNext()}">Next</a>
+    </div>
+</main>
+
 </body>
-<!--<footer th:replace="/layout :: footer"></footer>-->
 </html>

@@ -24,7 +24,7 @@ public class UserRoleService implements IUserRoleService{
     }
 
     @Override
-    public UserRole findById(Long id) throws NotFoundException {
+    public UserRole findById(Long id){
         return null;
     }
 
