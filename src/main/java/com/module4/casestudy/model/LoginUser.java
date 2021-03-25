@@ -18,11 +18,24 @@ public class LoginUser {
     private Long age;
     private String email;
     private String address;
-    private boolean disable;
+    private boolean disable = false;
 
 
     public LoginUser() {
     }
+
+    public LoginUser(Long id, String username, String password, String name, Long age, String email, String address, boolean disable, UserRole userRole) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.address = address;
+        this.disable = disable;
+        this.userRole = userRole;
+    }
+
 
     @ManyToOne
     private UserRole userRole;
@@ -91,5 +104,13 @@ public class LoginUser {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 }
