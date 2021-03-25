@@ -19,9 +19,10 @@ public class AppUserService implements IAppUserService, UserDetailsService {
     @Autowired
     private AppUserRepository appUserRepository;
 
+
     @Override
-    public LoginUser getUserByUserName(String userName) {
-        return appUserRepository.getLoginUserByUsername(userName);
+    public LoginUser getUserByUserName(String username) {
+        return appUserRepository.getLoginUserByUsername(username);
     }
 
     @Override
@@ -51,6 +52,5 @@ public class AppUserService implements IAppUserService, UserDetailsService {
                 authorities
         );
         return userDetails;
-
     }
 }

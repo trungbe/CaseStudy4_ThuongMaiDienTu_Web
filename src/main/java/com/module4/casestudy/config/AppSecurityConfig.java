@@ -17,7 +17,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
 
-
     //lay du lieu user tu trong DB
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -27,13 +26,19 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     //phan quyen theo tung tai khoan
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
+        http.authorizeRequests().antMatchers("/home/**").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/user/**").hasRole("USER")
+                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
+                .and()
+                .authorizeRequests().antMatchers("/users/**").hasRole("USER")
+                .and()
+                .authorizeRequests().antMatchers("/shop/**").hasRole("SHOP")
                 .and()
                 .formLogin()
                 .and()
                 .formLogin().successHandler(loginSuccessHandler)
+                .and()
+                .formLogin().loginPage("/login")
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .and()
