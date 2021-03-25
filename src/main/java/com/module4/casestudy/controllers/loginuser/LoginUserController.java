@@ -48,10 +48,11 @@ public class LoginUserController {
 
     @GetMapping("")
     public ModelAndView showList(){
-        ModelAndView modelAndView = new ModelAndView("user/home");
+        ModelAndView modelAndView = new ModelAndView("home/login");
         modelAndView.addObject("users", loginUserService.findALl());
         return modelAndView;
     }
+
     @GetMapping("/create")
     public ModelAndView showFormCreate() {
         ModelAndView modelAndView = new ModelAndView("user/create");
@@ -62,7 +63,6 @@ public class LoginUserController {
     @PostMapping("/create")
     public ModelAndView createUser(@ModelAttribute LoginUser loginUser) {
         loginUserService.save(loginUser);
-        ModelAndView modelAndView = new ModelAndView("user/create", "user", new LoginUser());
-        return modelAndView;
+        return new ModelAndView("redirect:/users");
     }
 }
