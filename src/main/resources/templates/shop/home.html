@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{shop/layouts/master_layout :: master_layout(
                                                 ~{::title},
-                                                ~{:: #main}
+                                                ~{:: #main},
+                                                ~{:: #jss}
                                                )}">
 <head>
     <title>Dashboard</title>
@@ -11,6 +12,5 @@
 <main id="main" >
     <h1>Hello </h1>
 </main>
-
 </body>
 </html>
