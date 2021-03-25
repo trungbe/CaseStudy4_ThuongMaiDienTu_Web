@@ -31,6 +31,6 @@
 //                     }, 500);
 //                 }
 //             });
-//             //slider.reloadSlider();
+//             // slider.reloadSlider();
 //         }
 // })(jQuery); // End of use strict
