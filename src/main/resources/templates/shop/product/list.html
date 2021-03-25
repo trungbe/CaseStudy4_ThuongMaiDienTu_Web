@@ -68,7 +68,7 @@
                             <td th:text="${p.soldNumber}"></td>
                             <td><img th:src="${'/uploadfile/'+p.image}" width="100px"></td>
                             <td th:text="${p.rate}"></td>
-<!--                            <td th:text="${p.shop.name}"></td>-->
+                            <td th:text="${p.shop.name}"></td>
                             <td><a th:href="@{/products/edit/{id}(id=${p.id})}" class="btn btn-outline-primary">Edit</a></td>
                             <td><a th:href="@{/products/delete/{id}(id=${p.id})}"
                                    class="btn btn-outline-danger" onclick="return confirm('Do you want delete ?');">Delete</a></td>
