@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -29,22 +28,24 @@ public class LoginUserController {
     private IAppUserService appUserService;
 
     @ModelAttribute("currentUser")
-    private LoginUser user(){
+    private LoginUser user() {
         return appUserService.getCurrentUser();
     }
+
     @ModelAttribute("listUserRole")
-    public List<UserRole> showAll(){
+    public List<UserRole> showAll() {
         return userRoleService.findALl();
     }
 
     @GetMapping("/create")
-    public ModelAndView showFormCreate(){
+    public ModelAndView showFormCreate() {
         ModelAndView modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("user", new LoginUser());
         return modelAndView;
     }
+
     @PostMapping("/create")
-    public ModelAndView createUser(@ModelAttribute LoginUser loginUser){
+    public ModelAndView createUser(@ModelAttribute LoginUser loginUser) {
         loginUserService.save(loginUser);
         ModelAndView modelAndView = new ModelAndView("user/create", "user", new LoginUser());
         return modelAndView;
