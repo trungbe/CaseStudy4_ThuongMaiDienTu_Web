@@ -88,4 +88,9 @@ public class ProductController {
         productService.deleteById(id);
         return modelAndView;
     }
+
+    @GetMapping("/view/{id}")
+    public ModelAndView viewDetail(@PathVariable long id) {
+        return new ModelAndView("/shop/product/view", "product", productService.findById(id));
+    }
 }
