@@ -26,7 +26,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     //phan quyen theo tung tai khoan
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
+        http.authorizeRequests().antMatchers("/home/**").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .authorizeRequests().antMatchers("/users/**").hasRole("USER")
                 .and()
