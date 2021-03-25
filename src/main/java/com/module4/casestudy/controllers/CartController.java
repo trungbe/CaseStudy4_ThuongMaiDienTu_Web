@@ -78,6 +78,7 @@ public class CartController {
 
     }
 
+
     private BillDetail setBillDetail(BillDetail billDetail, LoginUser currentUser, List<Bill> bills) {
 
         if (bills.size() > 0) {
