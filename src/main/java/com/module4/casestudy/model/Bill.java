@@ -20,7 +20,7 @@ public class Bill {
     @ManyToOne
     private LoginUser loginUser;
 
-    private Long TotalMoney;
+    private Double TotalMoney;
 
     private Date date;
 
@@ -52,11 +52,11 @@ public class Bill {
         this.loginUser = loginUser;
     }
 
-    public Long getTotalMoney() {
+    public Double getTotalMoney() {
         return TotalMoney;
     }
 
-    public void setTotalMoney(Long totalMoney) {
+    public void setTotalMoney(Double totalMoney) {
         TotalMoney = totalMoney;
     }
 

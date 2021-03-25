@@ -18,7 +18,16 @@ public class LoginUser {
     private Long age;
     private String email;
     private String address;
-    private boolean disable;
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
+    }
+
+    private boolean disable = false;
 
 
     public LoginUser() {

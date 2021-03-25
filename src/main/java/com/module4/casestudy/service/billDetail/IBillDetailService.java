@@ -12,4 +12,5 @@ public interface IBillDetailService extends IService<BillDetail> {
 
 
     List<BillDetail> findALlByBill(Bill bill);
+    Double calculateMoneyByBillId(Long BillId);
 }
