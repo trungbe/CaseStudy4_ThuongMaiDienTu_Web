@@ -42,4 +42,9 @@ public class ProductService implements IProductService {
         productRepository.deleteById(id);
     }
 
+
+    @Override
+    public Page<Product> getAllProductByShop(Shop shop, Pageable pageable) {
+        return productRepository.getAllByShop(shop, pageable);
+    }
 }

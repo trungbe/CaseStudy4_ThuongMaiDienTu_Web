@@ -2,9 +2,13 @@ package com.module4.casestudy.controllers.product;
 
 import com.module4.casestudy.exception.NotFoundException;
 import com.module4.casestudy.model.Category;
+import com.module4.casestudy.model.LoginUser;
 import com.module4.casestudy.model.Product;
+import com.module4.casestudy.model.Shop;
+import com.module4.casestudy.service.appuser.IAppUserService;
 import com.module4.casestudy.service.category.ICategoryService;
 import com.module4.casestudy.service.product.IProductService;
+import com.module4.casestudy.service.shop.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -29,10 +33,26 @@ public class ProductController {
     private IProductService productService;
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private IAppUserService appUserService;
+    @Autowired
+    private IShopService shopService;
+
+    @ModelAttribute("currentUser")
+    private LoginUser user() {
+        return appUserService.getCurrentUser();
+    }
 
     @ModelAttribute("categories")
     public List<Category> categories() {
         return categoryService.findALl();
+    }
+
+    @ModelAttribute("currentShop")
+    private Shop shop() {
+        LoginUser currentUser = this.user();
+        Shop shop = shopService.findAllByLoginUser(currentUser);
+        return shop;
     }
 
     @ExceptionHandler(NotFoundException.class)
@@ -42,7 +62,8 @@ public class ProductController {
 
     @GetMapping("")
     public ModelAndView getAll(@PageableDefault(size = 3) Pageable pageable) {
-        Page<Product> products = productService.findALl(pageable);
+        Shop shop = this.shop();
+        Page<Product> products = productService.getAllProductByShop(shop, pageable);
         ModelAndView modelAndView = new ModelAndView("shop/product/list");
         modelAndView.addObject("products", products);
         return modelAndView;
@@ -62,6 +83,7 @@ public class ProductController {
         String resource = environment.getProperty("upload.path").toString();
         FileCopyUtils.copy(imageMul.getBytes(), new File(resource + image));
         product.setImage(image);
+        product.setShop(this.shop());
         productService.save(product);
         ModelAndView modelAndView = new ModelAndView("shop/product/create", "products", new Product());
         modelAndView.addObject("mess", "Tao moi thanh cong product ten la " + product.getName());
@@ -93,4 +115,5 @@ public class ProductController {
     public ModelAndView viewDetail(@PathVariable long id) {
         return new ModelAndView("/shop/product/view", "product", productService.findById(id));
     }
+
 }
