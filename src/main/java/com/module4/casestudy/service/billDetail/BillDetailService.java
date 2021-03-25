@@ -48,4 +48,9 @@ public class BillDetailService implements IBillDetailService {
     public List<BillDetail> findALlByBill(Bill bill) {
         return billDetailRepository.findAllByBill(bill);
     }
+
+    @Override
+    public Double calculateMoneyByBillId(Long billId) {
+        return billDetailRepository.calculateMoneyByBillId(billId);
+    }
 }

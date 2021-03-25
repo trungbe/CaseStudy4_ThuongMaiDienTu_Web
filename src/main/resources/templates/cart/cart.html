@@ -16,20 +16,28 @@
     <tr>
         <td>Image</td>
         <td>Name</td>
-        <td>Price</td>
         <td>Number</td>
+        <td>Price</td>
+        <td>Total Money</td>
         <td>Shop</td>
         <td>Delete</td>
     </tr>
     <tr th:each="c:${productInCarts}">
         <td th:text="${c.product.image}"></td>
         <td th:text="${c.product.name}"></td>
-        <td th:text="${c.product.price*c.number}"></td>
+
         <td th:text="${c.number}"></td>
+        <td th:text="${c.product.price}"></td>
+        <td th:text="${c.product.price*c.number}"></td>
         <td th:text="${c.product.shop.name}"></td>
         <td><a th:href="${c.id}" onclick="deleteBillDetail($(this))">Delete</a></td>
     </tr>
+    <tr>
+        <td></td>
+        <td><button onclick="checkout()">Checkout</button></td>
+    </tr>
 </table>
+
 
 <script type="text/javascript">
 
@@ -37,12 +45,23 @@
         let billDetail = a.attr("href");
         $.ajax({
             type: "DELETE",
-            url: "/cart/delete/"+billDetail,
-            success: function (){
-            a.parent().parent().remove()
+            url: "/cart/delete/" + billDetail,
+            success: function () {
+                a.parent().parent().remove()
             }
         });
         event.preventDefault();
+
+    }
+
+    function checkout() {
+        $.ajax({
+            type: "PUT",
+            url: "/cart/checkout/",
+            success: alert("da thanh toan")
+        });
+        event.preventDefault();
+
 
     }
 </script>

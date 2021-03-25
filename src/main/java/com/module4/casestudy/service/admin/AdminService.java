@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import sun.rmi.runtime.Log;
 
 @Service
 public class AdminService implements IAdminService {
@@ -22,4 +23,5 @@ public class AdminService implements IAdminService {
     public Page<LoginUser> findUserRoleName(UserRole userRole, Pageable pageable) {
         return adminRepo.findAllByUserRole(userRole, pageable);
     }
+
 }
