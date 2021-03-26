@@ -38,7 +38,7 @@
                     <div class="col-sm-4  pull-left">Ảnh</div>
                     <br>
                     <div>
-                        <img th:src="${'/uploadfile/'+product.image}" width="100px">
+                        <img th:src="${'../'+product.image}" width="100px">
                     </div>
                     <br>
                     <div class="col-sm-4  pull-left" th:text="'Rate: '+${product.rate}"></div>
