@@ -31,18 +31,107 @@
     <tr>
         <td><input id="productId" th:value="${billDetail.product.id}" hidden=""></td>
         <td><input id="shopId" th:value="${billDetail.product.shop.id}" hidden=""></td>
-        <td><label for="number">Number</label> </td>
+        <td><label for="number">Number</label></td>
         <td><input type="number" id="number"></td>
     </tr>
 
     <tr>
         <td>Mua</td>
-        <td><button type="button" onclick="addToCart()">Add to cad</button>
+        <td>
+            <button type="button" onclick="addToCart()">Add to cad</button>
         </td>
     </tr>
 
 </table>
+
+<table id="comment-table">
+    <th:block th:each="c : ${comments}">
+        <tr>
+            <td th:text="${c.loginUser.name}"></td>
+            <td th:text="${c.date}"></td>
+        </tr>
+        <tr>
+            <td colspan="2" th:text="${c.commentContent}"></td>
+        </tr>
+    </th:block>
+
+</table>
+
+<h3>Comments</h3>
+<table>
+    <tr>
+        <td><textarea id="commentContent"></textarea></td>
+        <td>
+            <button onclick="addComment()">Comment</button>
+        </td>
+    </tr>
+
+</table>
+
+
 <script>
+    // function getCustomer(data1) {
+    //     return `<tr>` +
+    //         `<td>${data1.firstName}</td>` +
+    //         `<td>${data1.lastName}</td>` +
+    //         `<td><a class="deleteClass" href="${data1.id}" onclick="deleteCustomer($(this))">Delete</a></td>` +
+    //         `<td><a href="${data1.id}" onclick="getCustomerById($(this))" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</a></td>` +
+    //         `</tr>`;
+    // }
+
+    // function getComment(listComment) {
+    //
+    // }
+
+    function addCommentSuccess(datas) {
+
+        $.ajax({
+
+            type: "GET",
+            url: "/cart/get-comment",
+            data: JSON.stringify(datas),
+            success: function (listComment) {
+                let tableComment = '';
+                for (i = 0; i < listComment.length; i++) {
+                    tableComment +=
+                        `        <tr>\n` +
+                        `            <td th:text="${c.loginUser.name}"></td>\n` +
+                        `            <td th:text="${c.date}"></td>\n` +
+                        `        </tr>\n`
+
+                }
+                document.getElementById('commentContent').innerHTML=tableComment;
+
+            }
+
+        });
+        event.preventDefault();
+
+    }
+
+    function addComment() {
+        let productId = $('#productId').val();
+        let comment = $('#commentContent').val();
+        let userComment = {
+            commentContent: comment,
+            product: {
+                id: productId
+            }
+
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "/cart/add-comment",
+            data: JSON.stringify(userComment),
+            success: addCommentSuccess(datas),
+        })
+        event.preventDefault();
+
+    }
 
     function addToCart() {
         let productId = $('#productId').val();
@@ -64,8 +153,8 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            type:"POST",
-            url:"/cart/add-to-cart",
+            type: "POST",
+            url: "/cart/add-to-cart",
             data: JSON.stringify(billDetail),
             success: alert("added to cart"),
         })
