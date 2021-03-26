@@ -18,7 +18,7 @@
                     <i class="fas fa-table mr-1"></i>
                     Xin chào Admin
                 </div>
-                <form method="post" action="/admin/search" th:object="${userRole}" class="select">
+                <form method="post" action="/admin/classify" th:object="${userRole}" class="select">
                     <select th:field="*{id}">
                         <option th:each="a : ${userRoles}" th:value="${a.id}" th:text="${a.name}"></option>
                     </select>
@@ -52,12 +52,13 @@
                                     <div class="container">
                                         <label class="switch">
                                             <input  type="checkbox" checked >
-                                            <span id="userId" th:value="${p.id}" class="slider round" onchange="disable()"></span>
+                                            <span id="userId" th:value="${p.id}" class="slider round" onchange="disable()">
+                                            </span>
                                         </label>
                                     </div>
                                     <style type="text/css">
                                         .container {
-                                            width: 300px;
+                                            width: 100px;
                                             margin: auto;
                                             text-align: center;
                                         }
@@ -111,13 +112,12 @@
 
                                         /* Rounded sliders */
                                         .slider.round {
-                                            border-radius: 34px;
+                                            border-radius: 20px;
                                         }
 
                                         .slider.round:before {
                                             border-radius: 50%;
                                         }
-
                                     </style>
                                 </td>
                             </tr>
@@ -139,8 +139,8 @@
     function disable(){
         let userId = $('#userId').val();
         $.ajax({
-            type:"GET",
-            url:"/admin/list/"+userId,
+            type:"PUT",
+            url:"/admin/list/"+ userId,
             success:alert("disabled")
         })
         event.preventDefault();
