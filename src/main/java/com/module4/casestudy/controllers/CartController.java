@@ -7,7 +7,10 @@ import com.module4.casestudy.service.admin.IAdminService;
 import com.module4.casestudy.service.appuser.AppUserService;
 import com.module4.casestudy.service.billDetail.IBillDetailService;
 import com.module4.casestudy.service.category.ICategoryService;
+import com.module4.casestudy.service.comment.ICommentService;
 import com.module4.casestudy.service.product.IProductService;
+import com.module4.casestudy.service.shop.IShopService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,8 @@ public class CartController {
     private IBillDetailService billDetailService;
     @Autowired
     private IAdminService adminService;
+    @Autowired
+    private ICommentService commentService;
 
     @ModelAttribute("currentUser")
     private LoginUser getCurrentUser() {
@@ -48,8 +53,21 @@ public class CartController {
         Product product = productService.findById(id);
         BillDetail billDetail = new BillDetail();
         billDetail.setProduct(product);
+        List<UserComment> listComment = commentService.findUserCommentByProduct(product);
         modelAndView.addObject("billDetail", billDetail);
+        modelAndView.addObject("comments", listComment);
+//        modelAndView.addObject("comment",new UserComment());
         return modelAndView;
+    }
+
+    @GetMapping("/get-comment/{id}")
+    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@PathVariable Long id) {
+
+        Product product = productService.findById(id);
+        List<UserComment> commentList = commentService.findUserCommentByProduct(product);
+
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
+
     }
 
     @GetMapping("/getCart")
@@ -143,7 +161,6 @@ public class CartController {
         }
     }
 
-
     @PutMapping("/checkout")
     public ResponseEntity<List<BillDetail>> checkout() {
         LoginUser currentUser = this.getCurrentUser();
@@ -154,10 +171,41 @@ public class CartController {
             bill.setStatus(true);
             bill.setDate(new Date());
             bill.setTotalMoney(billDetailService.calculateMoneyByBillId(bill.getId()));
+            List<BillDetail> billDetailList = billDetailService.findALlByBill(bill);
+            for (BillDetail billDetail : billDetailList) {
+                Product product = billDetail.getProduct();
+                Long soldNumber = (product.getSoldNumber() + billDetail.getNumber());
+                product.setSoldNumber(soldNumber);
+                productService.save(product);
+            }
             billService.save(bill);
 
         }
-        return new ResponseEntity<>(null,HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
+
+    @GetMapping("/countItemInCart")
+    private int countItemInCart() {
+        LoginUser currentUser = this.getCurrentUser();
+        List<BillDetail> productInCarts = new ArrayList<>();
+        List<Bill> billList = billService.findBillNotPayByUserId(currentUser.getId());
+        for (Bill b : billList) {
+            List<BillDetail> billDetailList = billDetailService.findALlByBill(b);
+            productInCarts.addAll(billDetailList);
+        }
+        return productInCarts.size();
+    }
+
+    @PostMapping("/add-comment")
+    private ResponseEntity<UserComment> addComment(@RequestBody UserComment userComment) {
+
+        userComment.setDate(new Date());
+        userComment.setLoginUser(this.getCurrentUser());
+        commentService.save(userComment);
+
+        return new ResponseEntity<>(userComment, HttpStatus.OK);
+
+    }
+
 
 }
