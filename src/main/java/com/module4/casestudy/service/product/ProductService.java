@@ -47,4 +47,14 @@ public class ProductService implements IProductService {
     public Page<Product> getAllProductByShop(Shop shop, Pageable pageable) {
         return productRepository.getAllByShop(shop, pageable);
     }
+
+    @Override
+    public List<Product> findByProductName(String name) {
+        return productRepository.findProductByName(name);
+    }
+
+    @Override
+    public List<Product> showAllProduct() {
+        return productRepository.showAllProduct();
+    }
 }
