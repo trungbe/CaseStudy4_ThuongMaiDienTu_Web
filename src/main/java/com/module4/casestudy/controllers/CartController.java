@@ -143,7 +143,6 @@ public class CartController {
         }
     }
 
-
     @PutMapping("/checkout")
     public ResponseEntity<List<BillDetail>> checkout() {
         LoginUser currentUser = this.getCurrentUser();
@@ -154,10 +153,29 @@ public class CartController {
             bill.setStatus(true);
             bill.setDate(new Date());
             bill.setTotalMoney(billDetailService.calculateMoneyByBillId(bill.getId()));
+            List<BillDetail> billDetailList = billDetailService.findALlByBill(bill);
+            for (BillDetail billDetail : billDetailList){
+                Product product = billDetail.getProduct();
+                Long soldNumber = (product.getSoldNumber() + billDetail.getNumber());
+                product.setSoldNumber(soldNumber);
+                productService.save(product);
+            }
             billService.save(bill);
 
         }
         return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @GetMapping("/countItemInCart")
+    private int countItemInCart(){
+        LoginUser currentUser = this.getCurrentUser();
+        List<BillDetail> productInCarts = new ArrayList<>();
+        List<Bill> billList = billService.findBillNotPayByUserId(currentUser.getId());
+        for (Bill b : billList) {
+            List<BillDetail> billDetailList = billDetailService.findALlByBill(b);
+            productInCarts.addAll(billDetailList);
+        }
+        return productInCarts.size();
     }
 
 }
