@@ -36,5 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 *.env
-trung.env
+dat.env
 

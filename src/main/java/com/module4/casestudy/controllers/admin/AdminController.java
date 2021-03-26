@@ -39,15 +39,15 @@ public class AdminController {
     }
 
     @GetMapping("/list")
-    public ModelAndView showALl(@PageableDefault(size = 5) Pageable pageable) {
-        ModelAndView modelAndView = new ModelAndView("admin/list");
+    public ModelAndView showALl(@PageableDefault(size = 10) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("admin/adminList");
         modelAndView.addObject("admin", adminService.findAll(pageable));
         return modelAndView;
     }
 
     @PostMapping("/search")
-    public ModelAndView searchByName(@ModelAttribute UserRole userRole, @PageableDefault(size = 5) Pageable pageable) {
-        ModelAndView modelAndView = new ModelAndView("admin/list");
+    public ModelAndView searchByName(@ModelAttribute UserRole userRole, @PageableDefault(size = 10) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("admin/adminList");
         modelAndView.addObject("admin", adminService.findUserRoleName(userRole, pageable));
         return modelAndView;
     }
