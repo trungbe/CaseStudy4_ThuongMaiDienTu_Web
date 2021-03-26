@@ -60,8 +60,17 @@ public class ProductController {
         return new ModelAndView("error-404");
     }
 
+    private void uploadFile(@ModelAttribute Product product) throws IOException {
+        MultipartFile multipartFile = product.getImageMul();
+        String fileName = multipartFile.getOriginalFilename();
+        String resource = environment.getProperty("upload.path");
+        String newFile = resource + fileName;
+        FileCopyUtils.copy(multipartFile.getBytes(), new File(newFile));
+        product.setImage(fileName);
+    }
+
     @GetMapping("")
-    public ModelAndView getAll(@PageableDefault(size = 3) Pageable pageable) {
+    public ModelAndView getAll(@PageableDefault(size = 5) Pageable pageable) {
         Shop shop = this.shop();
         Page<Product> products = productService.getAllProductByShop(shop, pageable);
         ModelAndView modelAndView = new ModelAndView("shop/product/list");
@@ -78,11 +87,7 @@ public class ProductController {
 
     @PostMapping("/create")
     public ModelAndView create(@ModelAttribute Product product) throws IOException {
-        MultipartFile imageMul = product.getImageMul();
-        String image = imageMul.getOriginalFilename();
-        String resource = environment.getProperty("upload.path").toString();
-        FileCopyUtils.copy(imageMul.getBytes(), new File(resource + image));
-        product.setImage(image);
+        uploadFile(product);
         product.setShop(this.shop());
         productService.save(product);
         ModelAndView modelAndView = new ModelAndView("shop/product/create", "products", new Product());
@@ -100,12 +105,8 @@ public class ProductController {
 
     @PostMapping("/edit/{id}")
     public ModelAndView edit(@ModelAttribute Product product) throws IOException {
-        MultipartFile imageMul = product.getImageMul();
-        String image = imageMul.getOriginalFilename();
-        String resource = environment.getProperty("upload.path").toString();
-        FileCopyUtils.copy(imageMul.getBytes(), new File(resource + image));
+        uploadFile(product);
         product.setShop(this.shop());
-        product.setImage(image);
         productService.save(product);
         return new ModelAndView("redirect:/products");
     }
