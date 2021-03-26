@@ -99,7 +99,13 @@ public class ProductController {
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView edit(@ModelAttribute Product product) {
+    public ModelAndView edit(@ModelAttribute Product product) throws IOException {
+        MultipartFile imageMul = product.getImageMul();
+        String image = imageMul.getOriginalFilename();
+        String resource = environment.getProperty("upload.path").toString();
+        FileCopyUtils.copy(imageMul.getBytes(), new File(resource + image));
+        product.setShop(this.shop());
+        product.setImage(image);
         productService.save(product);
         return new ModelAndView("redirect:/products");
     }
