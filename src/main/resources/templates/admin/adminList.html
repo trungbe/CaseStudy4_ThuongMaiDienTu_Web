@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{shop/layouts/master_layout :: master_layout(
+~{::title},
+~{:: #main}
+)}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<main id="main">
+    <div class="container-fluid">
+        <div class="card mb-4" style="margin-top:10px">
+            <div class="card-header" style="display:flex; justify-content:space-between">
+                <div>
+                    <i class="fas fa-table mr-1"></i>
+                    Xin chào Admin
+                </div>
+                <form method="post" action="/admin/search" th:object="${userRole}" class="select">
+                    <select th:field="*{id}">
+                        <option th:each="a : ${userRoles}" th:value="${a.id}" th:text="${a.name}"></option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Classify</button>
+                </form>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="productTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>UserName</th>
+                            <th>Password</th>
+                            <th>Role</th>
+                            <th>Disable</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="p: ${admin}">
+                            <tr>
+                                <td th:text="${p.name}"></td>
+                                <td th:text="${p.address}"></td>
+                                <td th:text="${p.email}"></td>
+                                <td th:text="${p.username}"></td>
+                                <td th:text="${p.password}"></td>
+                                <td th:text="${p.userRole.name}"></td>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                    <a th:href="@{'/admin/list'(page=${admin.number - 1})}" role="button" class="btn btn-primary"
+                       th:if="${admin.hasPrevious()}">Previous</a>
+                    <span th:text="${admin.number + 1}"></span>
+                    /<span th:text="${admin.totalPages}"></span>
+                    <a th:href="@{'/admin/list'(page=${admin.number + 1})}" role="button" class="btn btn-primary"
+                       th:if="${admin.hasNext()}">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
