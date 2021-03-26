@@ -53,9 +53,9 @@ public class CartController {
         Product product = productService.findById(id);
         BillDetail billDetail = new BillDetail();
         billDetail.setProduct(product);
-        List<UserComment> userComment = commentService.findUserCommentByProduct(product);
+        List<UserComment> listComment = commentService.findUserCommentByProduct(product);
         modelAndView.addObject("billDetail", billDetail);
-        modelAndView.addObject("comments", userComment);
+        modelAndView.addObject("comments", listComment);
 //        modelAndView.addObject("comment",new UserComment());
         return modelAndView;
     }

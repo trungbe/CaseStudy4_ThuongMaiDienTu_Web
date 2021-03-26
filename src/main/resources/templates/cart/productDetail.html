@@ -79,9 +79,13 @@
     //         `</tr>`;
     // }
 
-    // function getComment(listComment) {
-    //
-    // }
+    function getComment(comment) {
+
+        return  `        <tr>` +
+        `            <td th:text="${comment.loginUser.name}"></td>\n` +
+        `            <td th:text="${comment.date}"></td>\n` +
+        `        </tr>\n`;
+    }
 
     function addCommentSuccess() {
         let productId = $('#productId').val();
@@ -89,18 +93,15 @@
         $.ajax({
 
             type: "GET",
-            url: "/cart/get-comment/"+productId,
+            url: "/cart/get-comment/" + productId,
             success: function (listComment) {
-                let tableComment = '';
-                for (i = 0; i < listComment.length; i++) {
-                    tableComment +=
-                        `        <tr>\n` +
-                        `            <td th:text="${c.loginUser.name}"></td>\n` +
-                        `            <td th:text="${c.date}"></td>\n` +
-                        `        </tr>\n`
+                let tableCommentContent = '';
+                for (let i = 0; i < listComment.length; i++) {
+
+                    tableCommentContent += getComment(listComment[i])
 
                 }
-                document.getElementById('commentContent').innerHTML=tableComment;
+                document.getElementById('commentContent').innerHTML = tableCommentContent;
 
             }
 
@@ -128,7 +129,7 @@
             url: "/cart/add-comment",
             data: JSON.stringify(userComment),
             success: addCommentSuccess(),
-        })
+        });
         event.preventDefault();
 
     }
@@ -159,6 +160,7 @@
             success: alert("added to cart"),
         })
         event.preventDefault();
+        document.getElementById('number').value = 0;
 
     }
 
