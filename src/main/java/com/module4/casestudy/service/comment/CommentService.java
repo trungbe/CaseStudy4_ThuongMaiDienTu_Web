@@ -33,7 +33,7 @@ public class CommentService implements ICommentService{
 
     @Override
     public UserComment save(UserComment userComment) {
-        return null;
+        return commentRepository.save(userComment);
     }
 
     @Override

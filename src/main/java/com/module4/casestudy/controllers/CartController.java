@@ -60,10 +60,10 @@ public class CartController {
         return modelAndView;
     }
 
-    @GetMapping("/get-comment")
-    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@RequestBody UserComment userComment) {
+    @GetMapping("/get-comment/{id}")
+    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@PathVariable Long id) {
 
-        Product product = userComment.getProduct();
+        Product product = productService.findById(id);
         List<UserComment> commentList = commentService.findUserCommentByProduct(product);
 
         return new ResponseEntity<>(commentList, HttpStatus.OK);

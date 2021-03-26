@@ -83,13 +83,13 @@
     //
     // }
 
-    function addCommentSuccess(datas) {
+    function addCommentSuccess() {
+        let productId = $('#productId').val();
 
         $.ajax({
 
             type: "GET",
-            url: "/cart/get-comment",
-            data: JSON.stringify(datas),
+            url: "/cart/get-comment/"+productId,
             success: function (listComment) {
                 let tableComment = '';
                 for (i = 0; i < listComment.length; i++) {
@@ -127,7 +127,7 @@
             type: "POST",
             url: "/cart/add-comment",
             data: JSON.stringify(userComment),
-            success: addCommentSuccess(datas),
+            success: addCommentSuccess(),
         })
         event.preventDefault();
 
