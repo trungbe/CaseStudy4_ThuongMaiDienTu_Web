@@ -1,9 +1,8 @@
-package com.module4.casestudy.home;
+package com.module4.casestudy.controllers.home;
 
 import com.module4.casestudy.model.Product;
 import com.module4.casestudy.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +37,7 @@ public class HomeController {
         List<Product> list = productService.findByProductName(name);
         if (list.size() == 0) return new ModelAndView("error-404");
         ModelAndView modelAndView = new ModelAndView("/home/list");
+        modelAndView.addObject("productsList", list);
         return modelAndView;
     }
 }
