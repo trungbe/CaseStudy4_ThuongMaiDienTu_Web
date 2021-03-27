@@ -10,3 +10,4 @@ public class DashboardController {
         return "/shop/home";
     }
 }
+
