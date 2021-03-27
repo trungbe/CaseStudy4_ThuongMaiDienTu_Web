@@ -60,15 +60,7 @@ public class CartController {
         return modelAndView;
     }
 
-    @GetMapping("/get-comment/{id}")
-    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@PathVariable Long id) {
 
-        Product product = productService.findById(id);
-        List<UserComment> commentList = commentService.findUserCommentByProduct(product);
-
-        return new ResponseEntity<>(commentList, HttpStatus.OK);
-
-    }
 
     @GetMapping("/getCart")
     public ModelAndView findProductOnCart() {
@@ -185,7 +177,7 @@ public class CartController {
     }
 
     @GetMapping("/countItemInCart")
-    private int countItemInCart() {
+    private ResponseEntity<Integer> countItemInCart() {
         LoginUser currentUser = this.getCurrentUser();
         List<BillDetail> productInCarts = new ArrayList<>();
         List<Bill> billList = billService.findBillNotPayByUserId(currentUser.getId());
@@ -193,7 +185,7 @@ public class CartController {
             List<BillDetail> billDetailList = billDetailService.findALlByBill(b);
             productInCarts.addAll(billDetailList);
         }
-        return productInCarts.size();
+        return new ResponseEntity<>(productInCarts.size(),HttpStatus.OK);
     }
 
     @PostMapping("/add-comment")
@@ -207,5 +199,14 @@ public class CartController {
 
     }
 
+//    @GetMapping("/get-comment/{id}")
+//    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@PathVariable Long id) {
+//
+//        Product product = productService.findById(id);
+//        List<UserComment> commentList = commentService.findUserCommentByProduct(product);
+//
+//        return new ResponseEntity<>(commentList, HttpStatus.OK);
+//
+//    }
 
 }
