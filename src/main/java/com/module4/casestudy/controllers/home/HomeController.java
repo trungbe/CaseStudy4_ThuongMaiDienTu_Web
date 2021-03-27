@@ -37,6 +37,7 @@ public class HomeController {
         List<Product> list = productService.findByProductName(name);
         if (list.size() == 0) return new ModelAndView("error-404");
         ModelAndView modelAndView = new ModelAndView("/home/list");
+        modelAndView.addObject("productsList", list);
         return modelAndView;
     }
 }
