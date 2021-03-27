@@ -199,14 +199,14 @@ public class CartController {
 
     }
 
-    @GetMapping("/get-comment/{id}")
-    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@PathVariable Long id) {
-
-        Product product = productService.findById(id);
-        List<UserComment> commentList = commentService.findUserCommentByProduct(product);
-
-        return new ResponseEntity<>(commentList, HttpStatus.OK);
-
-    }
+//    @GetMapping("/get-comment/{id}")
+//    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@PathVariable Long id) {
+//
+//        Product product = productService.findById(id);
+//        List<UserComment> commentList = commentService.findUserCommentByProduct(product);
+//
+//        return new ResponseEntity<>(commentList, HttpStatus.OK);
+//
+//    }
 
 }
