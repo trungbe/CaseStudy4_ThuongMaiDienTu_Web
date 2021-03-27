@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Product detail</h1>
-<a th:href="'/cart/getCart'"> your cart</a>
+<a th:href="'/cart/getCart'" id="your-cart" onload="getNumberCart()"> your cart</a>
 <p th:text="'wellcome: '+${currentUser.name}"></p>
 
 
@@ -29,21 +29,121 @@
         <td th:text="${billDetail.product.shop.name}"></td>
     </tr>
     <tr>
+        <td><label for="number">Number</label></td>
+        <td><input type="number" id="number"></td>
         <td><input id="productId" th:value="${billDetail.product.id}" hidden=""></td>
         <td><input id="shopId" th:value="${billDetail.product.shop.id}" hidden=""></td>
-        <td><label for="number">Number</label> </td>
-        <td><input type="number" id="number"></td>
+
     </tr>
 
     <tr>
         <td>Mua</td>
-        <td><button type="button" onclick="addToCart()">Add to cad</button>
+        <td>
+            <button type="button" onclick="addToCart()">Add to cad</button>
         </td>
     </tr>
 
 </table>
+
+<table id="comment-table">
+    <th:block th:each="c : ${comments}">
+        <tr>
+            <td th:text="${c.loginUser.name}"></td>
+            <td th:text="${c.date}"></td>
+        </tr>
+        <tr>
+            <td colspan="2" th:text="${c.commentContent}"></td>
+        </tr>
+    </th:block>
+
+</table>
+
+<h3>Comments</h3>
+<table>
+    <tr>
+        <td><textarea rows="5" cols="20" placeholder="Comment Here" id="commentContent"></textarea></td>
+    </tr>
+    <tr>
+        <button onclick="addComment()">Comment</button>
+    </tr>
+
+</table>
+
 <script>
 
+    function getComment(comment) {
+
+        return `        <tr>` +
+            `            <td>${comment.loginUser.name}</td>` +
+            `            <td>${comment.date}</td>` +
+            `        </tr>` +
+            `        <tr>
+            <td colspan="2">${comment.commentContent}</td>
+        </tr>`;
+
+    }
+
+    function addCommentSuccess(comment) {
+        // let productId = $('#productId').val();
+        //
+        // $.ajax({
+        //
+        //     type: "GET",
+        //     url: "/cart/get-comment/" + productId,
+        //     success: function (listComment) {
+                let tableCommentContent = '';
+        //         for (let i = 0; i < listComment.length; i++) {
+
+                    tableCommentContent += getComment(comment)
+
+                // }
+                //append them vao cho da co
+                $('#comment-table').append(tableCommentContent);
+
+                // document.getElementById('comment-table').innerHTML = tableCommentContent;
+                document.getElementById('commentContent').value = '';
+
+        //     }
+        //
+        // });
+
+    }
+
+    function addComment() {
+        let productId = $('#productId').val();
+        let comment = $('#commentContent').val();
+        let userComment = {
+            commentContent: comment,
+            product: {
+                id: productId
+            }
+
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "/cart/add-comment",
+            data: JSON.stringify(userComment),
+            success: function (comment){
+                addCommentSuccess(comment)
+            }
+        });
+        event.preventDefault();
+
+    }
+function getNumberInCart(){
+
+        $.ajax({
+            type:"GET",
+            url:"/cart/countItemInCart",
+            success:function (data){
+                return data;
+            }
+        })
+}
     function addToCart() {
         let productId = $('#productId').val();
         let shopId = $('#shopId').val();
@@ -64,14 +164,19 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            type:"POST",
-            url:"/cart/add-to-cart",
+            type: "POST",
+            url: "/cart/add-to-cart",
             data: JSON.stringify(billDetail),
             success: alert("added to cart"),
         })
         event.preventDefault();
-
+        document.getElementById('number').value = 0;
+        document.getElementById('your-cart').innerHTML = 'Your cart('+getNumberInCart()+')';
     }
+
+     function getNumberCart() {
+        document.getElementById('your-cart').innerHTML = 'Your cart('+getNumberInCart()+')';
+     }
 
 </script>
 </body>
