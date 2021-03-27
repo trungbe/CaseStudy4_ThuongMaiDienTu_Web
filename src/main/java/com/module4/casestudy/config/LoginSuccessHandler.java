@@ -52,7 +52,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             url = "/users";
 
         } else if (isShop(roles)) {
-            url = "/products";
+            url = "/dashboard";
 
         } else {
             url = "/khongcoquyen";
