@@ -39,8 +39,8 @@ public class StatisticalController {
 //        Long result = statisticalService.getDataByMonth(month, appUserService.getCurrentUser().getId());
 //        return result;
 //    }
-    @GetMapping("/month/{month}")
-    public ModelAndView findTotalByMonth(@PathVariable Integer month) {
+    @GetMapping("/getMonth")
+    public ModelAndView findTotalByMonth(@RequestParam Integer month) {
         Long result = statisticalService.getDataByMonth(month, appUserService.getCurrentUser().getId());
         return new ModelAndView("shop/statistical/month", "totalByMonth", result);
     }
