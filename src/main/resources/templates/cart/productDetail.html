@@ -18,9 +18,9 @@
     <meta charset="UTF-8">
     <title>Product Detail</title>
     <style>
-        body{
-            margin-top:20px;
-            background-color:#e9ebee;
+        body {
+            margin-top: 20px;
+            background-color: #e9ebee;
         }
 
         .be-comment-block {
@@ -28,7 +28,7 @@
             border: 1px solid #edeff2;
             border-radius: 2px;
             padding: 50px 70px;
-            border:1px solid #ffffff;
+            border: 1px solid #ffffff;
         }
 
         .comments-title {
@@ -167,27 +167,29 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled"  tabindex="-1" aria-disabled="true"><p th:text="'wellcome: '+${currentUser.name}"></p>
+                    <a class="nav-link disabled" tabindex="-1" aria-disabled="true"><p
+                            th:text="'wellcome: '+${currentUser.name}"></p>
                     </a>
                 </li>
             </ul>
             <form class="d-flex">
-                <a th:href="'/cart/getCart'"><span id="your-cart">Cart</span></a>
+                <a th:href="@{'/cart/getCart'}"><span id="your-cart">Cart</span></a>
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
     </div>
 </nav>
-<h1>Product detail</h1>
+<h1 align="center">Product detail</h1>
 <!--<a th:href="'/cart/getCart'" ><i class="bi bi-cart"></i><span id="your-cart"></span></a>-->
 
 <!--<a th:href="'/cart/getCart'"><p id="your-cart">Your cart</p></a>-->
 
 <table th:object="${billDetail}" class="table table-hover">
     <tr>
-        <td>Image</td>
-        <td th:text="${billDetail.product.image}"></td>
+        <td rowspan="7" width="300px"><img width="500x" th:src="'/'+${billDetail.product.image}" ></td>
+        <th>Product Description</th>
+        <td></td>
     </tr>
     <tr>
         <td>Name</td>
@@ -202,7 +204,7 @@
         <td th:text="${billDetail.product.shop.name}"></td>
     </tr>
     <tr>
-<!--        <td><label for="number">Number</label></td>-->
+        <!--        <td><label for="number">Number</label></td>-->
         <td><input type="text" id="number" hidden></td>
         <td><input id="productId" th:value="${billDetail.product.id}" hidden=""></td>
         <td><input id="shopId" th:value="${billDetail.product.shop.id}" hidden=""></td>
@@ -210,7 +212,7 @@
     </tr>
     <tr>
         <td>Trong kho con lai</td>
-        <td th:text="${billDetail.product.quantity} - ${billDetail.product.soldNumber}"></td>
+        <!--        <td th:text="${billDetail.product.quantity} - ${billDetail.product.soldNumber}"></td>-->
     </tr>
 
     <tr>
@@ -225,35 +227,36 @@
 <div class="container">
     <div class="be-comment-block">
         <h1 class="comments-title">Comments</h1>
-        <div class="be-comment" id="comment-table" >
+        <div class="be-comment" id="comment-table">
             <div th:each="c : ${comments}">
 
-            <div class="be-img-comment">
-                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
-            </div>
-            <div class="be-comment-content">
+                <div class="be-img-comment">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+                </div>
+                <div class="be-comment-content">
 
 				<span class="be-comment-name">
-					<span th:text="${c.loginUser.name}" >Comment's User Name</span>
+					<span th:text="${c.loginUser.name}">Comment's User Name</span>
 					</span>
-                <span class="be-comment-time">
+                    <span class="be-comment-time">
 					<i class="fa fa-clock-o"></i>
                     <p th:text="${c.date}"></p>
                 </span>
 
-                <p class="be-comment-text" th:text="${c.commentContent}">Comment context  </p>
+                    <p class="be-comment-text" th:text="${c.commentContent}">Comment context </p>
+                </div>
             </div>
-        </div>
         </div>
 
         <form class="form-block">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <textarea class="form-input" required="" placeholder="Your Comment" id="commentContent"></textarea>
+                        <textarea class="form-input" required="" placeholder="Your Comment"
+                                  id="commentContent"></textarea>
                     </div>
                 </div>
-<!--                <a class="btn btn-primary pull-right" >submit</a>-->
+                <!--                <a class="btn btn-primary pull-right" >submit</a>-->
                 <button onclick="addComment()">Comment</button>
 
             </div>
@@ -262,10 +265,9 @@
 </div><!--comment-->
 
 
-
 <script>
 
-    window.onload = function (){
+    window.onload = function () {
         document.getElementById('number').value = 1;
     }
 
@@ -308,7 +310,6 @@
             }
         })
     }
-
 
 
     function getComment(comment) {
