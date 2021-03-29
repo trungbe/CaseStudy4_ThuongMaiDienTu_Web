@@ -64,6 +64,14 @@
                             <a href="contact.html" class="dropdown-item">Contact Us</a>
                         </div>
                     </div>
+                    <div class="navbar-nav ml-auto">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
+                            <div class="dropdown-menu">
+                                <a href="/logout" class="dropdown-item">Logout</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -192,7 +200,7 @@
                                 </div>
                                 <div class="product-price">
                                     <h3>$<span th:text="${p.price}"></span></h3>
-                                    <a class="btn" href="/home/detail"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                    <a class="btn" th:href="/cart/productDetail/${p.id}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                                 </div>
                             </div>
                         </div>
@@ -448,7 +456,7 @@
                 <div class="footer-widget">
                     <h2>Purchase Info</h2>
                     <ul>
-                        <li><a href="#">Pyament Policy</a></li>
+                        <li><a href="#">Payment Policy</a></li>
                         <li><a href="#">Shipping Policy</a></li>
                         <li><a href="#">Return Policy</a></li>
                     </ul>
