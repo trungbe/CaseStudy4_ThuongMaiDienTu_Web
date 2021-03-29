@@ -13,7 +13,7 @@ public class StatisticalService implements IStatisticalService {
     @Autowired
     private StatisticalRepository statisticalRepository;
     @Override
-    public Long getDataByMonth(Integer month, Long userId) {
-        return statisticalRepository.getTotal(month, userId);
+    public Long getDataByMonth(Integer month, Long shopID) {
+        return statisticalRepository.getTotal(month, shopID);
     }
 }

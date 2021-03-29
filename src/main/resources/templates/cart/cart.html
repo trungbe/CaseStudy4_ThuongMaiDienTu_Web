@@ -79,7 +79,6 @@
     <tr th:each="c:${productInCarts}">
         <td th:text="${c.product.image}"></td>
         <td th:text="${c.product.name}"></td>
-
         <td>
             <button th:href="${c.id}" onclick="substrateOneQuantity($(this))">-</button>
             <input th:href="${c.id}" th:id="'numbers'+${c.id}" onkeyup="changeQuantity($(this))" type="text" th:value="${c.number}">
