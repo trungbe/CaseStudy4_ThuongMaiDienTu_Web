@@ -200,12 +200,11 @@
                                 </div>
                                 <div class="product-price">
                                     <h3>$<span th:text="${p.price}"></span></h3>
-                                    <a class="btn" th:href="/cart/productDetail/${p.id}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                    <a class="btn" th:href="@{'/cart/productDetail/'+${p.id}}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
 
