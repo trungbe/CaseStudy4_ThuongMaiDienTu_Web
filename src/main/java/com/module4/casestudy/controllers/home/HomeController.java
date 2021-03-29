@@ -25,7 +25,7 @@ public class HomeController {
     }
     @GetMapping("/list")
     public ModelAndView showList(){
-        ModelAndView modelAndView = new ModelAndView("/home/list");
+        ModelAndView modelAndView = new ModelAndView("home/list");
         List<Product> products = productService.showAllProduct();
         modelAndView.addObject("productsList", products);
         return modelAndView;
@@ -36,7 +36,7 @@ public class HomeController {
         name = "%" + name + "%";
         List<Product> list = productService.findByProductName(name);
         if (list.size() == 0) return new ModelAndView("error-404");
-        ModelAndView modelAndView = new ModelAndView("/home/list");
+        ModelAndView modelAndView = new ModelAndView("home/list");
         modelAndView.addObject("productsList", list);
         return modelAndView;
     }

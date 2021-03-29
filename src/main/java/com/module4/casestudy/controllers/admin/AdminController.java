@@ -57,16 +57,21 @@ public class AdminController {
         return modelAndView;
     }
 
-    @PutMapping("/list/{id}")
+    @PutMapping("/{id}")
     private ResponseEntity<LoginUser> disableUser(@PathVariable Long id){
         LoginUser loginUser = this.loginUserService.findById(id);
-        if (loginUser.isDisable()==true){
+        if (loginUser.isDisable()){
             loginUser.setDisable(false);
         } else {
             loginUser.setDisable(true);
         }
         loginUserService.save(loginUser);
         return new ResponseEntity<>(loginUser, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Page<LoginUser>> findAll(@PageableDefault Pageable pageable){
+        return new ResponseEntity<>(adminService.findAll(pageable), HttpStatus.OK);
     }
 
 }
