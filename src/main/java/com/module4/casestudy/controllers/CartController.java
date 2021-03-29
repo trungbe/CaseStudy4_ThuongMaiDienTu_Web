@@ -1,6 +1,5 @@
 package com.module4.casestudy.controllers;
 
-import com.module4.casestudy.exception.NotFoundException;
 import com.module4.casestudy.model.*;
 import com.module4.casestudy.service.Bill.IBillService;
 import com.module4.casestudy.service.admin.IAdminService;
@@ -139,7 +138,7 @@ public class CartController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<BillDetail> deleteBillDetail(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<BillDetail> deleteBillDetail(@PathVariable Long id){
         BillDetail billDetail = billDetailService.findById(id);
         if (billDetail == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -161,16 +160,20 @@ public class CartController {
             bill.setDate(new Date());
             bill.setTotalMoney(billDetailService.calculateMoneyByBillId(bill.getId()));
             List<BillDetail> billDetailList = billDetailService.findALlByBill(bill);
+            Long soldNumber = 0L;
             for (BillDetail billDetail : billDetailList) {
                 Product product = billDetail.getProduct();
                 if (billDetail.getNumber()<=(product.getQuantity()-product.getSoldNumber())){
-                    Long soldNumber = (product.getSoldNumber() + billDetail.getNumber());
+                    soldNumber = (product.getSoldNumber() + billDetail.getNumber());
                     product.setSoldNumber(soldNumber);
                     productService.save(product);
 
                 } else if (billDetail.getNumber()>(product.getQuantity()-product.getSoldNumber())){
-
+                    soldNumber = (product.getQuantity()-product.getSoldNumber());
                 }
+            }
+            if (soldNumber<0){
+                continue;
             }
             billService.save(bill);
 

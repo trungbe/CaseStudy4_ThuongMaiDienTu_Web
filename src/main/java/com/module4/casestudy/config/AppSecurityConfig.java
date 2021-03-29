@@ -34,6 +34,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/shop/**").hasRole("SHOP")
                 .and()
+                .authorizeRequests().antMatchers("/cart/GetCart").hasAnyRole("SHOP","USER")
+                .and()
                 .formLogin()
                 .and()
                 .formLogin().successHandler(loginSuccessHandler)
