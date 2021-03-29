@@ -1,17 +1,190 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+            integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+            integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+            crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product Detail</title>
+    <style>
+        body{
+            margin-top:20px;
+            background-color:#e9ebee;
+        }
+
+        .be-comment-block {
+            margin-bottom: 50px !important;
+            border: 1px solid #edeff2;
+            border-radius: 2px;
+            padding: 50px 70px;
+            border:1px solid #ffffff;
+        }
+
+        .comments-title {
+            font-size: 16px;
+            color: #262626;
+            margin-bottom: 15px;
+            font-family: 'Conv_helveticaneuecyr-bold';
+        }
+
+        .be-img-comment {
+            width: 60px;
+            height: 60px;
+            float: left;
+            margin-bottom: 15px;
+        }
+
+        .be-ava-comment {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        .be-comment-content {
+            margin-left: 80px;
+        }
+
+        .be-comment-content span {
+            display: inline-block;
+            width: 49%;
+            margin-bottom: 15px;
+        }
+
+        .be-comment-name {
+            font-size: 13px;
+            font-family: 'Conv_helveticaneuecyr-bold';
+        }
+
+        .be-comment-content a {
+            color: #383b43;
+        }
+
+        .be-comment-content span {
+            display: inline-block;
+            width: 49%;
+            margin-bottom: 15px;
+        }
+
+        .be-comment-time {
+            text-align: right;
+        }
+
+        .be-comment-time {
+            font-size: 11px;
+            color: #b4b7c1;
+        }
+
+        .be-comment-text {
+            font-size: 13px;
+            line-height: 18px;
+            color: #7a8192;
+            display: block;
+            background: #f6f6f7;
+            border: 1px solid #edeff2;
+            padding: 15px 20px 20px 20px;
+        }
+
+        .form-group.fl_icon .icon {
+            position: absolute;
+            top: 1px;
+            left: 16px;
+            width: 48px;
+            height: 48px;
+            background: #f6f6f7;
+            color: #b5b8c2;
+            text-align: center;
+            line-height: 50px;
+            -webkit-border-top-left-radius: 2px;
+            -webkit-border-bottom-left-radius: 2px;
+            -moz-border-radius-topleft: 2px;
+            -moz-border-radius-bottomleft: 2px;
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+        }
+
+        .form-group .form-input {
+            font-size: 13px;
+            line-height: 50px;
+            font-weight: 400;
+            color: #b4b7c1;
+            width: 100%;
+            height: 50px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border: 1px solid #edeff2;
+            border-radius: 3px;
+        }
+
+        .form-group.fl_icon .form-input {
+            padding-left: 70px;
+        }
+
+        .form-group textarea.form-input {
+            height: 150px;
+        }
+    </style>
 </head>
-<body>
+<body onload="getNumberInCart();">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled"  tabindex="-1" aria-disabled="true"><p th:text="'wellcome: '+${currentUser.name}"></p>
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <a th:href="'/cart/getCart'"><span id="your-cart">Cart</span></a>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
 <h1>Product detail</h1>
-<a th:href="'/cart/getCart'" id="your-cart" onload="getNumberCart()"> your cart</a>
-<p th:text="'wellcome: '+${currentUser.name}"></p>
+<!--<a th:href="'/cart/getCart'" ><i class="bi bi-cart"></i><span id="your-cart"></span></a>-->
 
+<!--<a th:href="'/cart/getCart'"><p id="your-cart">Your cart</p></a>-->
 
-<table th:object="${billDetail}">
+<table th:object="${billDetail}" class="table table-hover">
     <tr>
         <td>Image</td>
         <td th:text="${billDetail.product.image}"></td>
@@ -29,79 +202,144 @@
         <td th:text="${billDetail.product.shop.name}"></td>
     </tr>
     <tr>
-        <td><label for="number">Number</label></td>
-        <td><input type="number" id="number"></td>
+<!--        <td><label for="number">Number</label></td>-->
+        <td><input type="text" id="number" hidden></td>
         <td><input id="productId" th:value="${billDetail.product.id}" hidden=""></td>
         <td><input id="shopId" th:value="${billDetail.product.shop.id}" hidden=""></td>
 
+    </tr>
+    <tr>
+        <td>Trong kho con lai</td>
+        <td th:text="${billDetail.product.quantity} - ${billDetail.product.soldNumber}"></td>
     </tr>
 
     <tr>
         <td>Mua</td>
         <td>
-            <button type="button" onclick="addToCart()">Add to cad</button>
+            <button class="btn-cart" type="button" onclick="addToCart()">Add to cad</button>
         </td>
     </tr>
 
 </table>
 
-<table id="comment-table">
-    <th:block th:each="c : ${comments}">
-        <tr>
-            <td th:text="${c.loginUser.name}"></td>
-            <td th:text="${c.date}"></td>
-        </tr>
-        <tr>
-            <td colspan="2" th:text="${c.commentContent}"></td>
-        </tr>
-    </th:block>
+<div class="container">
+    <div class="be-comment-block">
+        <h1 class="comments-title">Comments</h1>
+        <div class="be-comment" id="comment-table" >
+            <div th:each="c : ${comments}">
 
-</table>
+            <div class="be-img-comment">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+            </div>
+            <div class="be-comment-content">
 
-<h3>Comments</h3>
-<table>
-    <tr>
-        <td><textarea rows="5" cols="20" placeholder="Comment Here" id="commentContent"></textarea></td>
-    </tr>
-    <tr>
-        <button onclick="addComment()">Comment</button>
-    </tr>
+				<span class="be-comment-name">
+					<span th:text="${c.loginUser.name}" >Comment's User Name</span>
+					</span>
+                <span class="be-comment-time">
+					<i class="fa fa-clock-o"></i>
+                    <p th:text="${c.date}"></p>
+                </span>
 
-</table>
+                <p class="be-comment-text" th:text="${c.commentContent}">Comment context  </p>
+            </div>
+        </div>
+        </div>
+
+        <form class="form-block">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <textarea class="form-input" required="" placeholder="Your Comment" id="commentContent"></textarea>
+                    </div>
+                </div>
+<!--                <a class="btn btn-primary pull-right" >submit</a>-->
+                <button onclick="addComment()">Comment</button>
+
+            </div>
+        </form>
+    </div>
+</div><!--comment-->
+
+
 
 <script>
 
+    window.onload = function (){
+        document.getElementById('number').value = 1;
+    }
+
+    function addToCart() {
+        let productId = $('#productId').val();
+        let shopId = $('#shopId').val();
+        let numbers = $('#number').val();
+
+        let billDetail =
+            {
+                product: {
+                    id: productId,
+                    shop: {
+                        id: shopId,
+                    }
+                },
+                number: numbers
+            }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "/cart/add-to-cart",
+            data: JSON.stringify(billDetail),
+            success: alert("added to cart"),
+        })
+        getNumberInCart();
+        window.scrollTo(0, 0);
+        event.preventDefault();
+    }
+
+    function getNumberInCart() {
+        $.ajax({
+            type: "GET",
+            url: "/cart/countItemInCart",
+            success: function (data) {
+                document.getElementById('your-cart').innerHTML = 'Cart(' + data + ')';
+            }
+        })
+    }
+
+
+
     function getComment(comment) {
 
-        return `        <tr>` +
-            `            <td>${comment.loginUser.name}</td>` +
-            `            <td>${comment.date}</td>` +
-            `        </tr>` +
-            `        <tr>
-            <td colspan="2">${comment.commentContent}</td>
-        </tr>`;
+        return `<div class="be-img-comment">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+            </div>
+            <div class="be-comment-content">
+
+				<span class="be-comment-name">
+					<span>${comment.loginUser.name}</span>
+					</span>
+                <span class="be-comment-time">
+					<i class="fa fa-clock-o"></i>
+                    <p >${comment.date}</p>
+                </span>
+
+                <p class="be-comment-text" >${comment.commentContent}  </p>
+            </div>`;
 
     }
 
     function addCommentSuccess(comment) {
-        // let productId = $('#productId').val();
-        //
-        // $.ajax({
-        //
-        //     type: "GET",
-        //     url: "/cart/get-comment/" + productId,
-        //     success: function (listComment) {
-                let tableCommentContent = '';
-        //         for (let i = 0; i < listComment.length; i++) {
+        let tableCommentContent = getComment(comment)
 
-                    tableCommentContent += getComment(comment)
+        // }
+        //append them vao cho da co
+        $('#comment-table').append(tableCommentContent);
 
-                // }
-                //append them vao cho da co
-                $('#comment-table').append(tableCommentContent);
-
-                // document.getElementById('comment-table').innerHTML = tableCommentContent;
-                document.getElementById('commentContent').value = '';
+        // document.getElementById('comment-table').innerHTML = tableCommentContent;
+        document.getElementById('commentContent').value = '';
 
         //     }
         //
@@ -127,56 +365,14 @@
             type: "POST",
             url: "/cart/add-comment",
             data: JSON.stringify(userComment),
-            success: function (comment){
+            success: function (comment) {
                 addCommentSuccess(comment)
             }
         });
         event.preventDefault();
 
     }
-function getNumberInCart(){
 
-        $.ajax({
-            type:"GET",
-            url:"/cart/countItemInCart",
-            success:function (data){
-                return data;
-            }
-        })
-}
-    function addToCart() {
-        let productId = $('#productId').val();
-        let shopId = $('#shopId').val();
-        let number = $('#number').val();
-
-        let billDetail =
-            {
-                product: {
-                    id: productId,
-                    shop: {
-                        id: shopId,
-                    }
-                },
-                number: number
-            }
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            type: "POST",
-            url: "/cart/add-to-cart",
-            data: JSON.stringify(billDetail),
-            success: alert("added to cart"),
-        })
-        event.preventDefault();
-        document.getElementById('number').value = 0;
-        document.getElementById('your-cart').innerHTML = 'Your cart('+getNumberInCart()+')';
-    }
-
-     function getNumberCart() {
-        document.getElementById('your-cart').innerHTML = 'Your cart('+getNumberInCart()+')';
-     }
 
 </script>
 </body>

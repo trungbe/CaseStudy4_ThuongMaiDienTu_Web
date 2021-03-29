@@ -9,8 +9,6 @@ import com.module4.casestudy.service.billDetail.IBillDetailService;
 import com.module4.casestudy.service.category.ICategoryService;
 import com.module4.casestudy.service.comment.ICommentService;
 import com.module4.casestudy.service.product.IProductService;
-import com.module4.casestudy.service.shop.IShopService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +46,7 @@ public class CartController {
 
 
     @GetMapping("/productDetail/{id}")
-    public ModelAndView showProductDetail(@PathVariable Long id) throws NotFoundException {
+    public ModelAndView showProductDetail(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("/cart/productDetail");
         Product product = productService.findById(id);
         BillDetail billDetail = new BillDetail();
@@ -56,10 +54,8 @@ public class CartController {
         List<UserComment> listComment = commentService.findUserCommentByProduct(product);
         modelAndView.addObject("billDetail", billDetail);
         modelAndView.addObject("comments", listComment);
-//        modelAndView.addObject("comment",new UserComment());
         return modelAndView;
     }
-
 
 
     @GetMapping("/getCart")
@@ -158,6 +154,7 @@ public class CartController {
         LoginUser currentUser = this.getCurrentUser();
         List<Bill> billList = billService.findBillNotPayByUserId(currentUser.getId());
 
+
         for (Bill bill : billList) {
             //with the payed bill, set status to true(payed)
             bill.setStatus(true);
@@ -166,26 +163,19 @@ public class CartController {
             List<BillDetail> billDetailList = billDetailService.findALlByBill(bill);
             for (BillDetail billDetail : billDetailList) {
                 Product product = billDetail.getProduct();
-                Long soldNumber = (product.getSoldNumber() + billDetail.getNumber());
-                product.setSoldNumber(soldNumber);
-                productService.save(product);
+                if (billDetail.getNumber()<=(product.getQuantity()-product.getSoldNumber())){
+                    Long soldNumber = (product.getSoldNumber() + billDetail.getNumber());
+                    product.setSoldNumber(soldNumber);
+                    productService.save(product);
+
+                } else if (billDetail.getNumber()>(product.getQuantity()-product.getSoldNumber())){
+
+                }
             }
             billService.save(bill);
 
         }
         return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-    @GetMapping("/countItemInCart")
-    private ResponseEntity<Integer> countItemInCart() {
-        LoginUser currentUser = this.getCurrentUser();
-        List<BillDetail> productInCarts = new ArrayList<>();
-        List<Bill> billList = billService.findBillNotPayByUserId(currentUser.getId());
-        for (Bill b : billList) {
-            List<BillDetail> billDetailList = billDetailService.findALlByBill(b);
-            productInCarts.addAll(billDetailList);
-        }
-        return new ResponseEntity<>(productInCarts.size(),HttpStatus.OK);
     }
 
     @PostMapping("/add-comment")
@@ -199,14 +189,53 @@ public class CartController {
 
     }
 
-//    @GetMapping("/get-comment/{id}")
-//    public ResponseEntity<List<UserComment>> getAllCommentByProduct(@PathVariable Long id) {
-//
-//        Product product = productService.findById(id);
-//        List<UserComment> commentList = commentService.findUserCommentByProduct(product);
-//
-//        return new ResponseEntity<>(commentList, HttpStatus.OK);
-//
-//    }
+
+    @GetMapping("/countItemInCart")
+    private ResponseEntity<Integer> countItemInCart() {
+        List<BillDetail> productInCarts = getListBillDetailOfCurrentUser();
+        int a = productInCarts.size();
+        return new ResponseEntity<>(a, HttpStatus.OK);
+    }
+
+
+    //lay ra  danh sach san pham trong gio hang cua nguoi dung hien tai
+    private List<BillDetail> getListBillDetailOfCurrentUser() {
+        LoginUser currentUser = this.getCurrentUser();
+        List<BillDetail> productInCarts = new ArrayList<>();
+        List<Bill> billList = billService.findBillNotPayByUserId(currentUser.getId());
+        for (Bill b : billList) {
+            List<BillDetail> billDetailList = billDetailService.findALlByBill(b);
+            productInCarts.addAll(billDetailList);
+        }
+        return productInCarts;
+    }
+
+    //khi so luong sp trong cart thay doi tra ve so luong
+    @PutMapping("/change-quantity-product-in-cart")
+    private ResponseEntity<Double> changeQuantityProductInCart( @RequestBody BillDetail billDetail) {
+        List<BillDetail> productInCarts = this.getListBillDetailOfCurrentUser();
+        Double totalMoneyOfOneProduct = 0D;
+        for (BillDetail b : productInCarts) {
+            if (b.getId().equals(billDetail.getId())) {
+                b.setNumber(billDetail.getNumber());
+                billDetailService.save(b);
+                totalMoneyOfOneProduct = b.getNumber() * b.getProduct().getPrice();
+            }
+        }
+        return new ResponseEntity<>(totalMoneyOfOneProduct, HttpStatus.OK);
+    }
+
+    //lay toan bo tong tien trong cart
+    @GetMapping("/get-all-money-in-cart")
+    private ResponseEntity<Double> getAllMoneyInCart() {
+        List<BillDetail> productInCarts = this.getListBillDetailOfCurrentUser();
+        Double totalMoneyInCart = 0D;
+        for (BillDetail b : productInCarts) {
+
+            totalMoneyInCart += b.getNumber() * b.getProduct().getPrice();
+
+        }
+        return new ResponseEntity<>(totalMoneyInCart, HttpStatus.OK);
+    }
 
 }
