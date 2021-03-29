@@ -1,6 +1,5 @@
 package com.module4.casestudy.service.statistical;
 
-import com.module4.casestudy.service.IService;
-
-public interface IStatisticalService extends IService {
+public interface IStatisticalService  {
+    Long getDataByMonth(Integer month, Long userId);
 }

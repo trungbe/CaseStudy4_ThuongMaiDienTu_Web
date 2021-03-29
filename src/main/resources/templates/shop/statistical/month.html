@@ -9,8 +9,29 @@
     <title>Statistical Month</title>
 </head>
 <body>
-<main id="main" >
-  <h1>tesst</h1>
+<main id="main">
+    <label class="col-sm-4  pull-left">Doanh thu theo thang</label>
+    <div class="col-sm-12">
+        <form action="/statistical/getMonth" >
+            <select name="month" id="month">
+                <option th:value="0">Select month</option>
+                <option th:value="1">Tháng 1</option>
+                <option th:value="2">Tháng 2</option>
+                <option th:value="3">Tháng 3</option>
+                <option th:value="4">Tháng 4</option>
+                <option th:value="5">Tháng 5</option>
+                <option th:value="6">Tháng 6</option>
+                <option th:value="7">Tháng 7</option>
+                <option th:value="8">Tháng 8</option>
+                <option th:value="9">Tháng 9</option>
+                <option th:value="10">Tháng 10</option>
+                <option th:value="11">Tháng 11</option>
+                <option th:value="12">Tháng 12</option>
+            </select>
+            <input style="background-color: #c8ff00" type="submit" value="Check">
+        </form>
+    </div>
+    <span style="color: red" th:if="${totalByMonth}" th:text="${totalByMonth}+'VND'"></span>
 </main>
 </body>
 </html>
