@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("home")
+@RequestMapping("/home")
 public class HomeController {
     @Autowired
     private IProductService productService;
@@ -31,7 +31,7 @@ public class HomeController {
         return modelAndView;
     }
 
-    @PostMapping("search")
+    @PostMapping("/search")
     public ModelAndView searchProductByName(@RequestParam String name){
         name = "%" + name + "%";
         List<Product> list = productService.findByProductName(name);
